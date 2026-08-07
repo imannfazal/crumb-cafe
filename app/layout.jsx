@@ -1,5 +1,6 @@
 import localFont from 'next/font/local';
 import { Atkinson_Hyperlegible } from 'next/font/google';
+import { CartProvider } from '../context/CartContext';
 import './globals.css';
 
 const slopes = localFont({
@@ -18,7 +19,9 @@ const atkinson = Atkinson_Hyperlegible({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${slopes.variable} ${atkinson.variable}`}>
-      <body className="font-body">{children}</body>
+      <body className="font-body">
+        <CartProvider>{children}</CartProvider>
+      </body>
     </html>
   );
 }
