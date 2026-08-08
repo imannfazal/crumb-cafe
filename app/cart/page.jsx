@@ -4,6 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '../../context/CartContext';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function CartPage() {
   const { cart, updateQty, removeFromCart, totalPrice } = useCart();
 
@@ -21,11 +23,11 @@ export default function CartPage() {
         {cart.length === 0 ? (
           <div className="flex flex-col items-center text-center mt-10">
             <p className="text-crumb-text mb-6">
-              Your cart's looking a little empty, <br/>let's fix that!
+              Your cart's looking a little empty — let's fix that.
             </p>
             <Link
               href="/menu"
-              className="bg-crumb-primary text-white font-lg px-6 py-3 rounded-full hover:bg-crumb-primaryDark transition-colors"
+              className="bg-crumb-primary text-white font-bold px-6 py-3 rounded-full hover:bg-crumb-primaryDark transition-colors"
             >
               Browse Treats
             </Link>
@@ -33,47 +35,53 @@ export default function CartPage() {
         ) : (
           <>
             <div className="flex flex-col gap-4">
-              {cart.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center gap-3 bg-crumb-bgLight rounded-xl p-3"
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    width={60}
-                    height={60}
-                    className="rounded-lg object-cover w-14 h-14"
-                  />
-                  <div className="flex-1">
-                    <p className="text-sm font-bold text-crumb-primary">{item.name}</p>
-                    <p className="text-xs text-crumb-text">AED {item.price}</p>
-                  </div>
-                  <div className="flex items-center gap-2 bg-crumb-accent rounded-full px-2 py-1">
-                    <button
-                      onClick={() => updateQty(item.id, item.qty - 1)}
-                      className="text-white font-bold px-1"
-                    >
-                      −
-                    </button>
-                    <span className="text-white text-xs font-bold w-4 text-center">
-                      {item.qty}
-                    </span>
-                    <button
-                      onClick={() => updateQty(item.id, item.qty + 1)}
-                      className="text-white font-bold px-1"
-                    >
-                      +
-                    </button>
-                  </div>
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-crumb-primary text-xs underline ml-2"
+              {cart.map((item) => {
+                const imageSrc = item.image?.startsWith('/uploads')
+                  ? `${API_URL}${item.image}`
+                  : item.image;
+
+                return (
+                  <div
+                    key={item.id}
+                    className="flex items-center gap-3 bg-crumb-bgLight rounded-xl p-3"
                   >
-                    Remove
-                  </button>
-                </div>
-              ))}
+                    <Image
+                      src={imageSrc}
+                      alt={item.name}
+                      width={60}
+                      height={60}
+                      className="rounded-lg object-cover w-14 h-14"
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-bold text-crumb-primary">{item.name}</p>
+                      <p className="text-xs text-crumb-text">AED {item.price}</p>
+                    </div>
+                    <div className="flex items-center gap-2 bg-crumb-accent rounded-full px-2 py-1">
+                      <button
+                        onClick={() => updateQty(item.id, item.qty - 1)}
+                        className="text-white font-bold px-1"
+                      >
+                        −
+                      </button>
+                      <span className="text-white text-xs font-bold w-4 text-center">
+                        {item.qty}
+                      </span>
+                      <button
+                        onClick={() => updateQty(item.id, item.qty + 1)}
+                        className="text-white font-bold px-1"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-crumb-primary text-xs underline ml-2"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="mt-8 flex justify-between items-center border-t border-crumb-primary/20 pt-4">

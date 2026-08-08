@@ -4,12 +4,21 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useCart } from '../../context/CartContext';
+import { createOrder } from '../../lib/api';
+
+const BANK_DETAILS = {
+  bankName: 'Emirates NBD', // update with her actual bank
+  accountName: 'Her Full Name', // update with actual account holder name
+  accountNumber: '0000000000000', // update with real account number
+  iban: 'AE000000000000000000000', // update with real IBAN
+};
 
 export default function CheckoutPage() {
   const { cart, totalPrice, clearCart } = useCart();
   const router = useRouter();
 
   const [fulfillment, setFulfillment] = useState('pickup');
+  const [paymentMethod, setPaymentMethod] = useState('bank-transfer');
   const [form, setForm] = useState({
     name: '',
     phone: '',
@@ -17,28 +26,44 @@ export default function CheckoutPage() {
     address: '',
     notes: '',
   });
+  const [submitting, setSubmitting] = useState(false);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    setSubmitting(true);
 
-    const order = {
-      id: `order-${Date.now()}`,
-      items: cart,
-      total: totalPrice,
+    const orderPayload = {
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
       fulfillment,
-      ...form,
-      status: 'received',
-      createdAt: new Date().toISOString(),
+      address: form.address || null,
+      notes: form.notes
+        ? `${form.notes} | Payment: ${paymentMethod === 'bank-transfer' ? 'Bank Transfer' : 'Cash'}`
+        : `Payment: ${paymentMethod === 'bank-transfer' ? 'Bank Transfer' : 'Cash'}`,
+      items: cart.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        qty: item.qty,
+      })),
+      total: totalPrice,
     };
 
-    localStorage.setItem('crumb-last-order', JSON.stringify(order));
-
-    clearCart();
-    router.push('/order-confirmation');
+    try {
+      const order = await createOrder(orderPayload);
+      localStorage.setItem('crumb-last-order', JSON.stringify({ ...order, paymentMethod }));
+      clearCart();
+      router.push('/order-confirmation');
+    } catch (err) {
+      console.error(err);
+      alert('Something went wrong placing your order. Please try again.');
+      setSubmitting(false);
+    }
   }
 
   if (cart.length === 0) {
@@ -80,6 +105,7 @@ export default function CheckoutPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {/* Pickup / Delivery */}
           <div className="flex gap-3">
             <button
               type="button"
@@ -104,6 +130,48 @@ export default function CheckoutPage() {
               Delivery
             </button>
           </div>
+
+          {/* Payment method */}
+          <div className="flex flex-col gap-2">
+            <span className="text-sm font-bold text-crumb-primary">Payment Method</span>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => setPaymentMethod('bank-transfer')}
+                className={`flex-1 py-2 rounded-full text-sm font-bold transition-colors ${
+                  paymentMethod === 'bank-transfer'
+                    ? 'bg-crumb-primary text-white'
+                    : 'bg-crumb-bgLight text-crumb-primary'
+                }`}
+              >
+                Bank Transfer
+              </button>
+              <button
+                type="button"
+                onClick={() => setPaymentMethod('cash')}
+                className={`flex-1 py-2 rounded-full text-sm font-bold transition-colors ${
+                  paymentMethod === 'cash'
+                    ? 'bg-crumb-primary text-white'
+                    : 'bg-crumb-bgLight text-crumb-primary'
+                }`}
+              >
+                Cash {fulfillment === 'pickup' ? 'on Pickup' : 'on Delivery'}
+              </button>
+            </div>
+          </div>
+
+          {paymentMethod === 'bank-transfer' && (
+            <div className="bg-crumb-bgLight rounded-xl p-4 text-sm text-crumb-text">
+              <p className="font-bold text-crumb-primary mb-2">Bank Transfer Details</p>
+              <p>Bank: {BANK_DETAILS.bankName}</p>
+              <p>Account Name: {BANK_DETAILS.accountName}</p>
+              <p>Account Number: {BANK_DETAILS.accountNumber}</p>
+              <p>IBAN: {BANK_DETAILS.iban}</p>
+              <p className="mt-2 italic">
+                Please complete the transfer and send a confirmation screenshot via WhatsApp. We'll start baking once payment is received.
+              </p>
+            </div>
+          )}
 
           <input
             type="text"
@@ -158,9 +226,10 @@ export default function CheckoutPage() {
 
           <button
             type="submit"
-            className="mt-2 bg-crumb-primary text-white font-bold py-3 rounded-full hover:bg-crumb-primaryDark transition-colors"
+            disabled={submitting}
+            className="mt-2 bg-crumb-primary text-white font-bold py-3 rounded-full hover:bg-crumb-primaryDark transition-colors disabled:opacity-50"
           >
-            Place Order
+            {submitting ? 'Placing Order...' : 'Place Order'}
           </button>
         </form>
       </div>

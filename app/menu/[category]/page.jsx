@@ -1,34 +1,56 @@
-import { products, categories } from '../../../data/products';
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { getProducts } from '../../../lib/api';
 import MenuProductCard from '../../../components/menu/MenuProductCard';
 import CartIcon from '../../../components/menu/CartIcon';
 import Footer from '../../../components/layout/Footer';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
-export default async function CategoryPage({ params }) {
-  const { category } = await params;
-  const categoryInfo = categories.find((c) => c.id === category);
-  const items = products.filter((p) => p.category === category);
+export default function CategoryPage() {
+  const { category } = useParams();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  if (!categoryInfo) notFound();
+  useEffect(() => {
+    getProducts()
+      .then((all) => {
+        setProducts(all.filter((p) => p.category === category));
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, [category]);
+
+  const categoryName = category
+    ? category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')
+    : '';
 
   return (
-    <main className="bg-crumb-bg min-h-screen">
-      <div className="px-6 pt-8 pb-14">
+    <main className="bg-crumb-bg min-h-screen flex flex-col">
+      <div className="px-6 pt-8 pb-14 flex-1">
         <div className="flex justify-between items-center mb-4">
-          <Link href="/menu" className="text-crumb-primary text-sm">
-            ← Back to menu
+          <Link href="/" className="text-crumb-primary text-sm">
+            ← Back to home
           </Link>
           <CartIcon />
         </div>
+
         <h1 className="font-hand text-3xl text-crumb-primary text-center mb-8">
-          {categoryInfo.name}
+          {categoryName}
         </h1>
-        <div className="flex flex-col">
-          {items.map((product) => (
-            <MenuProductCard key={product.id} product={product} />
-          ))}
-        </div>
+
+        {loading ? (
+          <p className="text-center text-crumb-text">Loading treats...</p>
+        ) : products.length === 0 ? (
+          <p className="text-center text-crumb-text">No products in this category yet.</p>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 md:max-w-4xl md:mx-auto">
+            {products.map((product) => (
+              <MenuProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </div>
       <Footer />
     </main>

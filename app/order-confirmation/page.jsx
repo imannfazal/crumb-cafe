@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+const WHATSAPP_NUMBER = '971588295388'; // replace with her real WhatsApp number, no + or spaces
+
 export default function OrderConfirmationPage() {
   const [order, setOrder] = useState(null);
 
@@ -22,13 +24,19 @@ export default function OrderConfirmationPage() {
     );
   }
 
+  const shortOrderId = order.id.slice(0, 8);
+  const whatsappMessage = encodeURIComponent(
+    `Hi! I just placed an order (#${shortOrderId}) for AED ${order.total}. Sending payment confirmation now.`
+  );
+  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+
   return (
     <main className="bg-crumb-bg min-h-screen flex flex-col items-center justify-center px-6 text-center">
       <h1 className="font-hand text-3xl text-crumb-primary mb-3">
         Order received!
       </h1>
       <p className="text-crumb-text mb-6">
-        Thanks {order.name}. <br/>We're getting started on your order. You'll hear from us soon at {order.phone}.
+        Thanks {order.name} — we're getting started on your order. You'll hear from us soon at {order.phone}.
       </p>
 
       <div className="bg-crumb-bgLight rounded-xl p-4 w-full max-w-sm text-left mb-6">
@@ -43,6 +51,17 @@ export default function OrderConfirmationPage() {
           <span>AED {order.total}</span>
         </div>
       </div>
+
+      {order.paymentMethod === 'bank-transfer' && (
+        <a
+          href={whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full max-w-sm mb-4 block text-center bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition-colors"
+        >
+          Send Payment Confirmation on WhatsApp
+        </a>
+      )}
 
       <Link
         href="/menu"
