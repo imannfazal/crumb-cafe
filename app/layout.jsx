@@ -19,6 +19,9 @@ const atkinson = Atkinson_Hyperlegible({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${slopes.variable} ${atkinson.variable}`}>
+      <head>
+        <meta name="color-scheme" content="light" />
+      </head>
       <body className="font-body">
         <CartProvider>{children}</CartProvider>
       </body>
