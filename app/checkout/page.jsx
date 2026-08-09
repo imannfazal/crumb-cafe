@@ -8,7 +8,7 @@ import { createOrder } from '../../lib/api';
 
 const BANK_DETAILS = {
   bankName: 'Emirates NBD', // update with her actual bank
-  accountName: 'Her Full Name', // update with actual account holder name
+  accountName: 'Javeria Fazal', // update with actual account holder name
   accountNumber: '0000000000000', // update with real account number
   iban: 'AE000000000000000000000', // update with real IBAN
 };
