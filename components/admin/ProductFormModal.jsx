@@ -6,12 +6,19 @@ import { createProduct, updateProduct, uploadImage } from '../../lib/api';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+const CATEGORIES = [
+  { value: 'cookies', label: 'Cookies' },
+  { value: 'brownies', label: 'Brownies' },
+  { value: 'cinnamon-rolls', label: 'Cinnamon Rolls' },
+  { value: 'coffee', label: 'Coffee' },
+];
+
 export default function ProductFormModal({ product, onClose, onSaved }) {
   const isEditing = !!product;
 
   const [form, setForm] = useState({
     name: product?.name || '',
-    category: product?.category || '',
+    category: product?.category || CATEGORIES[0].value,
     price: product?.price || '',
     image: product?.image || '',
   });
@@ -110,15 +117,18 @@ export default function ProductFormModal({ product, onClose, onSaved }) {
             className="w-full px-4 py-3 rounded-full bg-white text-sm text-crumb-text outline-none"
           />
 
-          <input
-            type="text"
+          <select
             name="category"
-            placeholder="Category (e.g. cookies, brownies, cakes)"
-            required
             value={form.category}
             onChange={handleChange}
             className="w-full px-4 py-3 rounded-full bg-white text-sm text-crumb-text outline-none"
-          />
+          >
+            {CATEGORIES.map((cat) => (
+              <option key={cat.value} value={cat.value}>
+                {cat.label}
+              </option>
+            ))}
+          </select>
 
           <input
             type="number"

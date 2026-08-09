@@ -12,6 +12,8 @@ class Product(Base):
     image = Column(String, nullable=False)
     in_stock = Column(Boolean, default=True)
     coming_soon = Column(Boolean, default=False)
+    quantity = Column(Integer, nullable=True)  # None = unlimited, number = tracked stock
+
 
 class Order(Base):
     __tablename__ = "orders"

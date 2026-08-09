@@ -36,7 +36,7 @@ export default function OrderConfirmationPage() {
         Order received!
       </h1>
       <p className="text-crumb-text mb-6">
-        Thanks {order.name} — we're getting started on your order. You'll hear from us soon at {order.phone}.
+        Thanks {order.name}, we're getting started on your order. You'll hear from us soon at {order.phone}.
       </p>
 
       <div className="bg-crumb-bgLight rounded-xl p-4 w-full max-w-sm text-left mb-6">

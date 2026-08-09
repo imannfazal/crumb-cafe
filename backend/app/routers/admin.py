@@ -83,3 +83,17 @@ def upload_image(file: UploadFile = File(...), authorized: bool = Depends(verify
     with open(filepath, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     return {"url": f"/uploads/{filename}"}
+
+@router.patch("/products/{product_id}/quantity", response_model=schemas.ProductSchema)
+def update_product_quantity(product_id: str, update: schemas.ProductQuantityUpdate, db: Session = Depends(get_db), authorized: bool = Depends(verify_token)):
+    product = db.query(models.Product).filter(models.Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    product.quantity = update.quantity
+    if update.quantity is not None and update.quantity > 0:
+        product.in_stock = True
+    elif update.quantity == 0:
+        product.in_stock = False
+    db.commit()
+    db.refresh(product)
+    return product

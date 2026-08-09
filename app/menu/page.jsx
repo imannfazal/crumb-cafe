@@ -5,7 +5,7 @@ import Link from 'next/link';
 import MenuProductCard from '../../components/menu/MenuProductCard';
 import CartIcon from '../../components/menu/CartIcon';
 import GoToCartButton from '../../components/menu/GoToCartButton';
-import Footer from '../../components/layout/Footer';
+// import Footer from '../../components/layout/Footer';
 import { getProducts } from '../../lib/api';
 
 export default function MenuPage() {
@@ -20,7 +20,7 @@ export default function MenuPage() {
   }, []);
 
   return (
-    <main className="bg-crumb-bg min-h-screen flex flex-col">
+    <main className="bg-crumb-bg min-h-screen flex flex-col mb-12">
       <div className="px-6 pt-8 pb-14 flex-1">
         <div className="flex justify-between items-center mb-4">
           <Link href="/" className="text-crumb-primary text-sm">
@@ -41,9 +41,9 @@ export default function MenuPage() {
             ))}
           </div>
         )}
+        <GoToCartButton />
       </div>
-      <Footer />
-      <GoToCartButton />
+      {/* <Footer /> */}
     </main>
   );
 }

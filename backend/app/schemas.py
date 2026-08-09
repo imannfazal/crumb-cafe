@@ -10,12 +10,16 @@ class ProductSchema(BaseModel):
     image: str
     in_stock: bool
     coming_soon: bool
+    quantity: Optional[int] = None
 
     class Config:
         from_attributes = True
 
 class ProductStockUpdate(BaseModel):
     in_stock: bool
+
+class ProductQuantityUpdate(BaseModel):
+    quantity: Optional[int] = None
 
 class ProductCreate(BaseModel):
     name: str
@@ -24,6 +28,7 @@ class ProductCreate(BaseModel):
     image: str
     in_stock: bool = True
     coming_soon: bool = False
+    quantity: Optional[int] = None
 
 class ProductUpdate(BaseModel):
     name: Optional[str] = None
@@ -32,6 +37,7 @@ class ProductUpdate(BaseModel):
     image: Optional[str] = None
     in_stock: Optional[bool] = None
     coming_soon: Optional[bool] = None
+    quantity: Optional[int] = None
 
 class OrderItem(BaseModel):
     id: str

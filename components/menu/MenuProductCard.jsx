@@ -12,6 +12,7 @@ export default function MenuProductCard({ product }) {
     price,
     in_stock: inStock,
     coming_soon: comingSoon,
+    quantity,
     id,
   } = product;
 
@@ -21,6 +22,10 @@ export default function MenuProductCard({ product }) {
 
   const cartItem = cart.find((item) => item.id === id);
   const qty = cartItem ? cartItem.qty : 0;
+
+  const hasLimitedStock = quantity !== null && quantity !== undefined;
+  const atMaxQty = hasLimitedStock && qty >= quantity;
+  const lowStock = hasLimitedStock && quantity > 0 && quantity <= 5;
 
   return (
     <div className="relative rounded-2xl overflow-hidden bg-crumb-primary w-full">
@@ -41,8 +46,15 @@ export default function MenuProductCard({ product }) {
           Coming Soon
         </span>
       ) : price !== undefined ? (
-        <div className="flex flex-col gap-2 px-2 py-2 bg-crumb-primaryDark">
-          <span className="text-white font-body text-xs">AED {price}</span>
+        <div className="flex flex-col gap-1 px-2 py-2 bg-crumb-primaryDark">
+          <div className="flex items-center justify-between">
+            <span className="text-white font-body text-xs">AED {price}</span>
+            {lowStock && (
+              <span className="text-crumb-accent text-[10px] font-bold">
+                Only {quantity} left
+              </span>
+            )}
+          </div>
 
           {qty === 0 ? (
             <button
@@ -62,8 +74,9 @@ export default function MenuProductCard({ product }) {
               </button>
               <span className="text-white text-[10px] font-bold w-3 text-center">{qty}</span>
               <button
-                onClick={() => updateQty(id, qty + 1)}
-                className="text-white font-bold text-sm leading-none"
+                onClick={() => !atMaxQty && updateQty(id, qty + 1)}
+                disabled={atMaxQty}
+                className="text-white font-bold text-sm leading-none disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 +
               </button>

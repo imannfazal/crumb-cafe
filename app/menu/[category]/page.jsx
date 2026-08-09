@@ -6,7 +6,7 @@ import { getProducts } from '../../../lib/api';
 import MenuProductCard from '../../../components/menu/MenuProductCard';
 import CartIcon from '../../../components/menu/CartIcon';
 import GoToCartButton from '../../../components/menu/GoToCartButton';
-import Footer from '../../../components/layout/Footer';
+// import Footer from '../../../components/layout/Footer';
 import { useParams } from 'next/navigation';
 
 export default function CategoryPage() {
@@ -52,9 +52,9 @@ export default function CategoryPage() {
             ))}
           </div>
         )}
+        <GoToCartButton />
       </div>
-      <Footer />
-      <GoToCartButton />
+      
     </main>
   );
 }
