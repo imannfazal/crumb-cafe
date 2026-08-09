@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer>
       {/* Social + email row */}
-      <div className="px-6 py-6 flex justify-between items-center border-t border-crumb-primary/10">
+      <div className="px-6 py-6 flex justify-between items-center">
         <div className="flex gap-3">
           <a href="#" aria-label="Facebook">
             <Image src="/images/icons/facebook.svg" alt="" width={19} height={19} />
@@ -15,7 +15,7 @@ export default function Footer() {
         </div>
         <div className="text-right leading-tight">
           <p className="font-hand text-[21px] text-crumb-primary">Email us at:</p>
-          <p className="text-[12px] text-[#904D23]">thecrumbcafe.ae.com</p>
+          <p className="text-[12px] text-[#904D23]">thecrumbcafe.com</p>
         </div>
       </div>
 

@@ -84,7 +84,7 @@ export default function CheckoutPage() {
     <main className="bg-crumb-bg min-h-screen">
       <div className="px-6 pt-8 pb-14">
         <Link href="/cart" className="text-crumb-primary text-sm mb-4 inline-block">
-          ← Back to cart
+          <img src="/images/icons/back-button.svg" alt="Back" className="inline-block mr-2 h-[11px] -mt-[2px]" /> Back to cart
         </Link>
 
         <h1 className="font-hand text-3xl text-crumb-primary text-center mb-8">

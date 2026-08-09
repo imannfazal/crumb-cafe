@@ -48,12 +48,12 @@ export default function MenuProductCard({ product }) {
             <button
               disabled={!inStock}
               onClick={() => addToCart(product)}
-              className="bg-crumb-accent text-white text-[10px] font-bold px-2 py-1.5 rounded-full hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed w-full"
+              className="bg-crumb-accent text-white text-[10px] font-bold px-2 h-[30px] rounded-full hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed w-full"
             >
               {inStock ? 'Add to Cart' : 'Out of Stock'}
             </button>
           ) : (
-            <div className="flex items-center justify-center gap-2 bg-crumb-accent rounded-full px-2 py-1">
+            <div className="flex items-center justify-center gap-2 bg-crumb-accent rounded-full px-2 h-[30px]">
               <button
                 onClick={() => updateQty(id, qty - 1)}
                 className="text-white font-bold text-sm leading-none"

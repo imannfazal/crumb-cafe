@@ -14,6 +14,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "https://crumb-cafe-beta.vercel.app",
+        "https://thecrumbcafe.com",
+        "https://www.thecrumbcafe.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],

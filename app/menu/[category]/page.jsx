@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getProducts } from '../../../lib/api';
 import MenuProductCard from '../../../components/menu/MenuProductCard';
 import CartIcon from '../../../components/menu/CartIcon';
+import GoToCartButton from '../../../components/menu/GoToCartButton';
 import Footer from '../../../components/layout/Footer';
 import { useParams } from 'next/navigation';
 
@@ -31,7 +32,7 @@ export default function CategoryPage() {
       <div className="px-6 pt-8 pb-14 flex-1">
         <div className="flex justify-between items-center mb-4">
           <Link href="/" className="text-crumb-primary text-sm">
-            ← Back to home
+            <img src="/images/icons/back-button.svg" alt="Back" className="inline-block mr-2 h-[11px] -mt-[2px]" /> Back to home
           </Link>
           <CartIcon />
         </div>
@@ -53,6 +54,7 @@ export default function CategoryPage() {
         )}
       </div>
       <Footer />
+      <GoToCartButton />
     </main>
   );
 }

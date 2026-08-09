@@ -18,7 +18,7 @@ export default function OrderConfirmationPage() {
       <main className="bg-crumb-bg min-h-screen flex flex-col items-center justify-center px-6 text-center">
         <p className="text-crumb-text mb-6">No recent order found.</p>
         <Link href="/menu" className="text-crumb-primary underline text-sm">
-          Back to menu
+          <img src="/images/icons/back-button.svg" alt="Back" className="inline-block mr-2 h-[11px] -mt-[2px]" /> Back to menu
         </Link>
       </main>
     );

@@ -13,7 +13,8 @@ export default function CartPage() {
     <main className="bg-crumb-bg min-h-screen">
       <div className="px-6 pt-8 pb-14">
         <Link href="/menu" className="text-crumb-primary text-sm mb-4 inline-block">
-          ← Back to menu
+          <img src="/images/icons/back-button.svg" alt="Back" className="inline-block mr-2 h-[11px] -mt-[2px]" />
+          Back to menu
         </Link>
 
         <h1 className="font-hand text-3xl text-crumb-primary text-center mb-8">
@@ -23,7 +24,7 @@ export default function CartPage() {
         {cart.length === 0 ? (
           <div className="flex flex-col items-center text-center mt-10">
             <p className="text-crumb-text mb-6">
-              Your cart's looking a little empty — let's fix that.
+              Your cart's looking a little empty,<br />let's fix that.
             </p>
             <Link
               href="/menu"
