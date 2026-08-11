@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'motion/react';
 import { useCart } from '../../context/CartContext';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -28,7 +29,7 @@ export default function MenuProductCard({ product }) {
   const lowStock = hasLimitedStock && quantity > 0 && quantity <= 5;
 
   return (
-    <div className="relative rounded-2xl overflow-hidden bg-crumb-primary w-full">
+    <motion.div layout className="relative rounded-2xl overflow-hidden bg-crumb-primary w-full">
       <span className={`absolute top-2 left-0 right-0 text-center font-hand text-[17px] md:text-base z-10 px-1 ${comingSoon ? 'text-white/50' : 'text-white'}`}>
         {name}
       </span>
@@ -46,7 +47,7 @@ export default function MenuProductCard({ product }) {
           Coming Soon
         </span>
       ) : price !== undefined ? (
-        <div className="flex flex-col gap-1 px-2 py-2 bg-crumb-primaryDark">
+        <motion.div layout className="flex flex-col gap-1 px-2 py-2 bg-crumb-primaryDark">
           <div className="flex items-center justify-between">
             <span className="text-white font-body text-xs">AED {price}</span>
             {lowStock && (
@@ -56,34 +57,50 @@ export default function MenuProductCard({ product }) {
             )}
           </div>
 
-          {qty === 0 ? (
-            <button
-              disabled={!inStock}
-              onClick={() => addToCart(product)}
-              className="bg-crumb-accent text-white text-[10px] font-bold px-2 h-[30px] rounded-full hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed w-full"
-            >
-              {inStock ? 'Add to Cart' : 'Out of Stock'}
-            </button>
-          ) : (
-            <div className="flex items-center justify-center gap-2 bg-crumb-accent rounded-full px-2 h-[30px]">
-              <button
-                onClick={() => updateQty(id, qty - 1)}
-                className="text-white font-bold text-sm leading-none"
+          <AnimatePresence mode="wait">
+            {qty === 0 ? (
+              <motion.button
+                key="add-button"
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                disabled={!inStock}
+                onClick={() => addToCart(product)}
+                className="bg-crumb-accent text-white text-[10px] font-bold px-2 h-[30px] rounded-full hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed w-full"
               >
-                −
-              </button>
-              <span className="text-white text-[10px] font-bold w-3 text-center">{qty}</span>
-              <button
-                onClick={() => !atMaxQty && updateQty(id, qty + 1)}
-                disabled={atMaxQty}
-                className="text-white font-bold text-sm leading-none disabled:opacity-40 disabled:cursor-not-allowed"
+                {inStock ? 'Add to Cart' : 'Out of Stock'}
+              </motion.button>
+            ) : (
+              <motion.div
+                key="stepper"
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center justify-center gap-2 bg-crumb-accent rounded-full px-2 h-[30px]"
               >
-                +
-              </button>
-            </div>
-          )}
-        </div>
+                <button
+                  onClick={() => updateQty(id, qty - 1)}
+                  className="text-white font-bold text-sm leading-none"
+                >
+                  −
+                </button>
+                <span className="text-white text-[10px] font-bold w-3 text-center">{qty}</span>
+                <button
+                  onClick={() => !atMaxQty && updateQty(id, qty + 1)}
+                  disabled={atMaxQty}
+                  className="text-white font-bold text-sm leading-none disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  +
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       ) : null}
-    </div>
+    </motion.div>
   );
 }

@@ -8,6 +8,19 @@ import CartIcon from '../../../components/menu/CartIcon';
 import GoToCartButton from '../../../components/menu/GoToCartButton';
 // import Footer from '../../../components/layout/Footer';
 import { useParams } from 'next/navigation';
+import { motion } from 'motion/react';
+
+const container = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+};
 
 export default function CategoryPage() {
   const { category } = useParams();
@@ -46,15 +59,22 @@ export default function CategoryPage() {
         ) : products.length === 0 ? (
           <p className="text-center text-crumb-text">No products in this category yet.</p>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 md:max-w-4xl md:mx-auto">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 md:max-w-4xl md:mx-auto"
+          >
             {products.map((product) => (
-              <MenuProductCard key={product.id} product={product} />
+              <motion.div key={product.id} variants={item}>
+                <MenuProductCard product={product} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
         <GoToCartButton />
       </div>
-      
+
     </main>
   );
 }
