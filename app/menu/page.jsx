@@ -33,7 +33,7 @@ export default function MenuPage() {
   }, []);
 
   return (
-    <main className="bg-crumb-bg min-h-screen flex flex-col ">
+    <main className="bg-crumb-bg min-h-screen flex flex-col pb-12">
       <div className="px-6 pt-8 pb-14 flex-1">
         <div className="flex justify-between items-center mb-4">
           <Link href="/" className="text-crumb-primary text-sm">

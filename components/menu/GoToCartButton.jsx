@@ -9,7 +9,7 @@ export default function GoToCartButton() {
   if (totalItems === 0) return null;
 
   return (
-    <div className="fixed bottom-16 left-0 right-0 px-6 z-30 overflow-hidden">
+    <div className="fixed bottom-4 left-0 right-0 px-6 z-30 overflow-hidden">
       <Link
         href="/cart"
         className="flex justify-between items-center bg-crumb-primary text-white font-bold px-6 py-3 rounded-full shadow-xl max-w-md mx-auto hover:bg-crumb-primaryDark transition-colors"
