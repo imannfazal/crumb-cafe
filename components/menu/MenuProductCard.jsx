@@ -65,10 +65,12 @@ export default function MenuProductCard({ product }) {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.95, y: 1 }}
                 transition={{ duration: 0.2 }}
                 disabled={!inStock}
                 onClick={() => addToCart(product)}
-                className="bg-crumb-accent text-white text-[10px] font-bold px-2 h-[30px] rounded-full hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed w-full"
+                className="bg-crumb-accent text-white text-[10px] font-bold px-2 h-[30px] rounded-full hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed w-full shadow-md shadow-black/20 border-b-2 border-black/20"
               >
                 {inStock ? 'Add to Cart' : 'Out of Stock'}
               </motion.button>
@@ -80,7 +82,7 @@ export default function MenuProductCard({ product }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center justify-center gap-2 bg-crumb-accent rounded-full px-2 h-[30px]"
+                className="flex items-center justify-center gap-2 bg-crumb-accent rounded-full px-2 h-[30px] shadow-md shadow-black/20 border-b-2 border-black/20"
               >
                 <button
                   onClick={() => updateQty(id, qty - 1)}

@@ -1,0 +1,41 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+  <!-- Whisk, line art style -->
+  <g transform="translate(18,14) rotate(-12)" stroke="#3B6FA6" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 95 L18 60"/>
+    <path d="M18 60 C2 55, -3 30, 6 10 C10 4, 26 4, 30 10 C39 30, 34 55, 18 60"/>
+    <path d="M18 60 C10 52, 9 30, 14 14" opacity="0.55" stroke-width="1.6"/>
+    <path d="M18 60 C26 52, 27 30, 22 14" opacity="0.55" stroke-width="1.6"/>
+    <ellipse cx="18" cy="100" rx="5" ry="7" fill="#3B6FA6" opacity="0.15" stroke="none"/>
+  </g>
+
+  <!-- Cookie, line art with a couple soft-filled chips -->
+  <g transform="translate(92,88)">
+    <circle cx="0" cy="0" r="30" stroke="#3B6FA6" stroke-width="2.2" fill="#DCF0FB" fill-opacity="0.5"/>
+    
+    <circle cx="-9" cy="-7" r="3.4" fill="#E8A33D"/>
+    <circle cx="8" cy="-11" r="2.6" fill="#E8A33D" opacity="0.85"/>
+    <circle cx="11" cy="6" r="3.2" fill="#E8A33D"/>
+    <circle cx="-7" cy="11" r="2.4" fill="#E8A33D" opacity="0.85"/>
+    <circle cx="2" cy="1" r="2.6" fill="#E8A33D" opacity="0.7"/>
+  </g>
+
+  <!-- Sparkle -->
+  <g transform="translate(138,32)" fill="#E8A33D">
+    <path d="M0 -11L2.8 -2.8L11 0L2.8 2.8L0 11L-2.8 2.8L-11 0L-2.8 -2.8Z" opacity="0.75"/>
+  </g>
+  <g transform="translate(150,55)" fill="#E8A33D" opacity="0.5">
+    <path d="M0 -5L1.3 -1.3L5 0L1.3 1.3L0 5L-1.3 1.3L-5 0L-1.3 -1.3Z"/>
+  </g>
+
+  <!-- Small heart, line art -->
+  <g transform="translate(38,132)" stroke="#3B6FA6" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+    <path d="M0 8C-8 1 -13 -7 -6.5 -11.5C-3 -13.5 0 -9 0 -6.5C0 -9 3 -13.5 6.5 -11.5C13 -7 8 1 0 8Z"/>
+  </g>
+
+  <!-- small dot cluster -->
+  <g fill="#3B6FA6">
+    <circle cx="130" cy="115" r="2" opacity="0.35"/>
+    <circle cx="140" cy="122" r="1.4" opacity="0.3"/>
+    <circle cx="120" cy="125" r="1.6" opacity="0.3"/>
+  </g>
+</svg>

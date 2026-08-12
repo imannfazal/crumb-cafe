@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'motion/react';
 import { useCart } from '../../context/CartContext';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const MotionLink = motion(Link);
 
 export default function CartPage() {
   const { cart, updateQty, removeFromCart, totalPrice } = useCart();
@@ -90,12 +92,15 @@ export default function CartPage() {
               <span className="font-bold text-crumb-primary">AED {totalPrice}</span>
             </div>
 
-            <Link
+            <MotionLink
               href="/checkout"
-              className="mt-6 block text-center bg-crumb-primary text-white font-bold py-3 rounded-full hover:bg-crumb-primaryDark transition-colors"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97, y: 2 }}
+              transition={{ duration: 0.15 }}
+              className="mt-6 block text-center bg-crumb-primary text-white font-bold py-3 rounded-full hover:bg-crumb-primaryDark transition-colors shadow-lg shadow-crumb-primaryDark/30 border-b-4 border-crumb-primaryDark"
             >
               Proceed to Checkout
-            </Link>
+            </MotionLink>
           </>
         )}
       </div>

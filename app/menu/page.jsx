@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'motion/react';
 import MenuProductCard from '../../components/menu/MenuProductCard';
 import CartIcon from '../../components/menu/CartIcon';
@@ -41,9 +42,18 @@ export default function MenuPage() {
           </Link>
           <CartIcon />
         </div>
-        <h1 className="font-hand text-3xl text-crumb-primary text-center mb-8">
-          Our Menu
-        </h1>
+        <div className="relative flex justify-center mb-8">
+          <Image
+            src="/images/doodles/cap.svg"
+            alt=""
+            width={32}
+            height={32}
+            className="absolute -top-2 right-[calc(50%-70px)] opacity-90"
+          />
+          <h1 className="font-hand text-3xl text-crumb-primary text-center">
+            Our Menu
+          </h1>
+        </div>
 
         {loading ? (
           <p className="text-center text-crumb-text">Loading treats...</p>
@@ -60,11 +70,6 @@ export default function MenuPage() {
               </motion.div>
             ))}
           </motion.div>
-          // <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 md:max-w-4xl md:mx-auto">
-          //   {products.map((product) => (
-          //     <MenuProductCard key={product.id} product={product} />
-          //   ))}
-          // </div>
         )}
         <GoToCartButton />
       </div>

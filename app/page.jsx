@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Hero from '../components/home/Hero';
 import FeatureStrip from '../components/home/FeatureStrip';
 import MadeFreshSection from '../components/home/MadeFreshSection';
@@ -6,7 +7,7 @@ import Footer from '../components/layout/Footer';
 
 export default function Home() {
   return (
-    <main className="bg-crumb-bg">
+    <main className="bg-crumb-bg relative overflow-hidden">
       {/* <Header /> */}
       <Hero />
       <FeatureStrip />

@@ -3,14 +3,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import { useCart } from '../../context/CartContext';
 import { createOrder } from '../../lib/api';
 
 const BANK_DETAILS = {
-  bankName: 'Emirates NBD', // update with her actual bank
-  accountName: 'Javeria Fazal', // update with actual account holder name
-  accountNumber: '0000000000000', // update with real account number
-  iban: 'AE000000000000000000000', // update with real IBAN
+  bankName: 'Emirates NBD',
+  accountName: 'Javeria Fazal',
+  accountNumber: '0000000000000',
+  iban: 'AE000000000000000000000',
 };
 
 export default function CheckoutPage() {
@@ -105,7 +106,6 @@ export default function CheckoutPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Pickup / Delivery */}
           <div className="flex gap-3">
             <button
               type="button"
@@ -131,7 +131,6 @@ export default function CheckoutPage() {
             </button>
           </div>
 
-          {/* Payment method */}
           <div className="flex flex-col gap-2">
             <span className="text-sm font-bold text-crumb-primary">Payment Method</span>
             <div className="flex gap-3">
@@ -224,13 +223,16 @@ export default function CheckoutPage() {
             className="w-full px-4 py-3 rounded-2xl bg-white text-sm text-crumb-text outline-none resize-none"
           />
 
-          <button
+          <motion.button
             type="submit"
             disabled={submitting}
-            className="mt-2 bg-crumb-primary text-white font-bold py-3 rounded-full hover:bg-crumb-primaryDark transition-colors disabled:opacity-50"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.97, y: 2 }}
+            transition={{ duration: 0.15 }}
+            className="mt-2 bg-crumb-primary text-white font-bold py-3 rounded-full hover:bg-crumb-primaryDark transition-colors disabled:opacity-50 shadow-lg shadow-crumb-primaryDark/30 border-b-4 border-crumb-primaryDark"
           >
             {submitting ? 'Placing Order...' : 'Place Order'}
-          </button>
+          </motion.button>
         </form>
       </div>
     </main>
